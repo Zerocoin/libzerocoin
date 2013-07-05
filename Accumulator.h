@@ -82,7 +82,7 @@ private:
 	Bignum value;
 	// Denomination is stored as an INT because storing
 	// and enum raises amigiuities in the serialize code //FIXME if possible
-	int denonination;
+	int denomination;
 };
 
 /**A witness that a PublicCoin is in the accumulation of a set of coins
