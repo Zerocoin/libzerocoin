@@ -15,7 +15,7 @@
 namespace libzerocoin {
     
 //Accumulator class
-Accumulator::Accumulator(const AccumulatorAndProofParams* p, const CoinDenomination d): params(p), denonination(d) {
+Accumulator::Accumulator(const AccumulatorAndProofParams* p, const CoinDenomination d): params(p), denomination(d) {
     if (!(params->initialized)){
         throw ZerocoinException("Invalid parameters for accumulator");
     }
@@ -29,10 +29,10 @@ void Accumulator::accumulate(const PublicCoin& coin) {
         throw ZerocoinException("Accumulator is not initialized");
     }
 
-    if(this->denonination != coin.getDenomination()){
+    if(this->denomination != coin.getDenomination()){
         std::stringstream msg;
         msg << "Wrong denomination for coin. Expected coins of denomination: " <<
-                this->denonination << ". Instead, got a coin of denomination: " <<
+                this->denomination << ". Instead, got a coin of denomination: " <<
                  coin.getDenomination() << std::ends;
         throw std::invalid_argument(msg.str());
     }
