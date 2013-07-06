@@ -26,8 +26,9 @@ CoinSpend::CoinSpend(const Params* p, const PrivateCoin& coin,
     // a different set of public parameters. We do this because the RSA accumulator
     // has specific requirements for the commitment parameters that are not
     // compatible with the group we use for the serial number proof.
-    // Specifically, are serial number proof requires the order of the commitment group
-    // to be the same as the modulus of the upper group.
+    // Specifically, our serial number proof requires the order of the commitment group
+    // to be the same as the modulus of the upper group. The Accumulator proof requires a
+    // group with a significantly larger order.
     const Commitment fullCommitmentToCoinUnderSerialParams(&p->serialNumberSoKCommitmentGroup, coin.getPublicCoin().getValue());
     this->serialCommitmentToCoinValue = fullCommitmentToCoinUnderSerialParams.getCommitmentValue();
 

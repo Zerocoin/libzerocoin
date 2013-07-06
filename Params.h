@@ -171,7 +171,7 @@ public:
     * compromised. The integer "N" must be a MINIMUM of 1024
     * in length. 3072 bits is strongly recommended.
     **/
-    Params(Bignum accumulatorModulus,
+    Params(Bignum accumulatorModulus, 
            uint32_t securityLevel = ZEROCOIN_DEFAULT_SECURITYLEVEL);
 
     bool initialized;

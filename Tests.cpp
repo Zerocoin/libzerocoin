@@ -81,6 +81,10 @@ GetTestModulus()
     // TODO: should use a hard-coded RSA modulus for testing
     if (!testModulus) {
         Bignum p, q;
+        
+        // Note: we are NOT using safe primes for testing because
+        // they take too long to generate. Don't do this in real
+        // usage. See the paramgen utility for better code.
         p = Bignum::generatePrime(1024, false);
         q = Bignum::generatePrime(1024, false);
         testModulus = p * q;
