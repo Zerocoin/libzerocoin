@@ -16,6 +16,13 @@
 #include "Params.h"
 #include "bitcoin_bignum/serialize.h"
 
+// We use a SHA256 hash for our PoK challenges. Update the following
+// if we ever change hash functions.
+#define COMMITMENT_EQUALITY_CHALLENGE_SIZE  256
+
+// A 512-bit security parameter for the statistical ZK PoK.
+#define COMMITMENT_EQUALITY_SECMARGIN       512
+
 namespace libzerocoin {
 
     /**
@@ -68,7 +75,7 @@ public:
          strm >> *this;
      }
 
-    const Bignum calculateChallenge(const Bignum& a,const Bignum& b, const Bignum &commitOne, const Bignum &commitTwo) const;
+    const Bignum calculateChallenge(const Bignum& a, const Bignum& b, const Bignum &commitOne, const Bignum &commitTwo) const;
 
 	/**Verifies the proof
 	 *

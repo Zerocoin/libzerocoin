@@ -229,52 +229,55 @@ Test_Accumulator()
 bool
 Test_EqualityPoK()
 {
-    try {
-        // Generate a random integer "val"
-        Bignum val = Bignum::randBignum(g_Params->coinCommitmentGroup.groupOrder);
-
-        // Manufacture two commitments to "val", both
-        // under different sets of parameters
-        Commitment one(&g_Params->accumulatorParams.accumulatorPoKCommitmentGroup, val);
-
-        Commitment two(&g_Params->serialNumberSoKCommitmentGroup, val);
-        
-        // Now generate a proof of knowledge that "one" and "two" are
-        // both commitments to the same value
-        CommitmentProofOfKnowledge pok(&g_Params->accumulatorParams.accumulatorPoKCommitmentGroup,
-                                       &g_Params->serialNumberSoKCommitmentGroup,
-                                       one, two);
-        
-        // Serialize the proof into a stream
-        CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
-        ss << pok;
-        
-        // Deserialize back into a PoK object
-        CommitmentProofOfKnowledge newPok(&g_Params->accumulatorParams.accumulatorPoKCommitmentGroup,
-                                   &g_Params->serialNumberSoKCommitmentGroup,
-                                   ss);
-        
-        if (newPok.Verify(one.getCommitmentValue(), two.getCommitmentValue()) != true) {
+    // Run this test 10 times
+    for (uint32_t i = 0; i < 10; i++) {
+        try {
+            // Generate a random integer "val"
+            Bignum val = Bignum::randBignum(g_Params->coinCommitmentGroup.groupOrder);
+            
+            // Manufacture two commitments to "val", both
+            // under different sets of parameters
+            Commitment one(&g_Params->accumulatorParams.accumulatorPoKCommitmentGroup, val);
+            
+            Commitment two(&g_Params->serialNumberSoKCommitmentGroup, val);
+            
+            // Now generate a proof of knowledge that "one" and "two" are
+            // both commitments to the same value
+            CommitmentProofOfKnowledge pok(&g_Params->accumulatorParams.accumulatorPoKCommitmentGroup,
+                                           &g_Params->serialNumberSoKCommitmentGroup,
+                                           one, two);
+            
+            // Serialize the proof into a stream
+            CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
+            ss << pok;
+            
+            // Deserialize back into a PoK object
+            CommitmentProofOfKnowledge newPok(&g_Params->accumulatorParams.accumulatorPoKCommitmentGroup,
+                                              &g_Params->serialNumberSoKCommitmentGroup,
+                                              ss);
+            
+            if (newPok.Verify(one.getCommitmentValue(), two.getCommitmentValue()) != true) {
+                return false;
+            }
+            
+            // Just for fun, deserialize the proof a second time
+            CDataStream ss2(SER_NETWORK, PROTOCOL_VERSION);
+            ss2 << pok;
+            
+            // This time tamper with it, then deserialize it back into a PoK
+            ss2[15] = 0;
+            CommitmentProofOfKnowledge newPok2(&g_Params->accumulatorParams.accumulatorPoKCommitmentGroup,
+                                               &g_Params->serialNumberSoKCommitmentGroup,
+                                               ss2);
+            
+            // If the tampered proof verifies, that's a failure!
+            if (newPok2.Verify(one.getCommitmentValue(), two.getCommitmentValue()) == true) {
+                return false;
+            }
+            
+        } catch (runtime_error &e) {
             return false;
         }
-        
-        // Just for fun, deserialize the proof a second time
-        CDataStream ss2(SER_NETWORK, PROTOCOL_VERSION);
-        ss2 << pok;
-        
-        // This time tamper with it, then deserialize it back into a PoK
-        ss2[15] = 0;
-        CommitmentProofOfKnowledge newPok2(&g_Params->accumulatorParams.accumulatorPoKCommitmentGroup,
-                                          &g_Params->serialNumberSoKCommitmentGroup,
-                                          ss2);
-        
-        // If the tampered proof verifies, that's a failure!
-        if (newPok2.Verify(one.getCommitmentValue(), two.getCommitmentValue()) == true) {
-            return false;
-        }
-        
-    } catch (runtime_error &e) {
-        return false;
     }
     
     return true;
