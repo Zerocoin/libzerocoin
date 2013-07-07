@@ -58,7 +58,7 @@ namespace libzerocoin {
         //
         // We choose these large values to ensure statistical zero knowledge.
         uint32_t randomSize = COMMITMENT_EQUALITY_CHALLENGE_SIZE + COMMITMENT_EQUALITY_SECMARGIN + 
-        std::max(std::max(this->ap->modulus.bitSize(), this->ap->modulus.bitSize()),
+        std::max(std::max(this->ap->modulus.bitSize(), this->bp->modulus.bitSize()),
                  std::max(this->ap->groupOrder.bitSize(), this->bp->groupOrder.bitSize()));
         Bignum maxRange = (Bignum(2).pow(randomSize) - Bignum(1));
         
@@ -102,7 +102,7 @@ namespace libzerocoin {
         // Compute the maximum range of S1, S2, S3 and verify that the given values are
         // in a correct range. This might be an unnecessary check.
         uint32_t maxSize = 2 * (COMMITMENT_EQUALITY_CHALLENGE_SIZE + COMMITMENT_EQUALITY_SECMARGIN +
-                                std::max(std::max(this->ap->modulus.bitSize(), this->ap->modulus.bitSize()),
+                                std::max(std::max(this->ap->modulus.bitSize(), this->bp->modulus.bitSize()),
                                          std::max(this->ap->groupOrder.bitSize(), this->bp->groupOrder.bitSize())));
         
         if ((uint32_t)this->S1.bitSize() > maxSize ||
