@@ -18,13 +18,6 @@ using namespace std;
 #include <curses.h>
 #include <exception>
 #include "Zerocoin.h"
-#include "bitcoin_bignum/bignum.h"
-#include "bitcoin_bignum/serialize.h"
-#include "Params.h"
-#include "Coin.h"
-#include "CoinSpend.h"
-#include "ParamGeneration.h"
-#include "Accumulator.h"
 
 using namespace libzerocoin;
 

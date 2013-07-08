@@ -15,8 +15,6 @@
 
 #include <stdexcept>
 
-//#define ZEROCOIN_DEBUG                  1
-
 #define ZEROCOIN_DEFAULT_SECURITYLEVEL      80
 #define ZEROCOIN_MIN_SECURITY_LEVEL         80
 #define ZEROCOIN_MAX_SECURITY_LEVEL         80
@@ -38,5 +36,17 @@ class ZerocoinException : public std::runtime_error
 public:
     explicit ZerocoinException(const std::string& str) : std::runtime_error(str) {}
 };
+
+#include "bitcoin_bignum/serialize.h"
+#include "bitcoin_bignum/bignum.h"
+#include "bitcoin_bignum/hash.h"
+#include "Params.h"
+#include "Coin.h"
+#include "Commitment.h"
+#include "Accumulator.h"
+#include "AccumulatorProofOfKnowledge.h"
+#include "CoinSpend.h"
+#include "SerialNumberSignatureOfKnowledge.h"
+#include "ParamGeneration.h"
 
 #endif /* ZEROCOIN_H_ */

@@ -12,10 +12,10 @@
 #ifndef ACCUMULATOR_H_
 #define ACCUMULATOR_H_
 
-#include "bitcoin_bignum/bignum.h"
-#include "bitcoin_bignum/serialize.h"
-#include "Params.h"
-#include "Coin.h"
+//#include "bitcoin_bignum/bignum.h"
+//#include "bitcoin_bignum/serialize.h"
+//#include "Params.h"
+//#include "Coin.h"
 
 namespace libzerocoin {
 /**

@@ -10,9 +10,7 @@
 * @license    This project is released under the MIT license.
 **/
 
-#include "AccumulatorProofOfKnowledge.h"
-#include "bitcoin_bignum/bignum.h"
-#include "bitcoin_bignum/hash.h"
+#include "Zerocoin.h"
 
 namespace libzerocoin {
 

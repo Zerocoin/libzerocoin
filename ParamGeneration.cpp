@@ -10,9 +10,7 @@
 /// \license    This project is released under the MIT license.
 
 #include <string>
-#include "Params.h"
-#include "ParamGeneration.h"
-#include "bitcoin_bignum/hash.h"
+#include "Zerocoin.h"
 
 using namespace std;
 

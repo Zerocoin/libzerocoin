@@ -13,12 +13,6 @@
 #ifndef ACCUMULATEPROOF_H_
 #define ACCUMULATEPROOF_H_
 
-#include "Params.h"
-#include "Coin.h"
-#include "Commitment.h"
-#include "bitcoin_bignum/bignum.h"
-#include "Accumulator.h"
-
 namespace libzerocoin {
 
 /**A prove that a value insde the commitment commitmentToCoin is in an accumulator a.

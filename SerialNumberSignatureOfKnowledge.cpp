@@ -9,8 +9,9 @@
 * @copyright  Copyright 2013 Ian Miers, Christina Garman and Matthew Green
 * @license    This project is released under the MIT license.
 **/
-#include "SerialNumberSignatureOfKnowledge.h"
+
 #include "Zerocoin.h"
+
 namespace libzerocoin {
 
 SerialNumberSignatureOfKnowledge::SerialNumberSignatureOfKnowledge(const Params* p): params(p){ }

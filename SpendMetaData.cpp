@@ -10,8 +10,7 @@
 * @license    This project is released under the MIT license.
 **/
 
-#include "SpendMetaData.h"
-#include "bitcoin_bignum/hash.h"
+#include "Zerocoin.h"
 
 namespace libzerocoin {
 

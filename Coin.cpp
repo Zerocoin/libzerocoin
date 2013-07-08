@@ -12,9 +12,6 @@
 
 #include <stdexcept>
 #include "Zerocoin.h"
-#include "Coin.h"
-#include "Commitment.h"
-#include "bitcoin_bignum/bignum.h"
 
 namespace libzerocoin {
 

@@ -10,9 +10,8 @@
  * @license    This project is released under the MIT license.
  **/
 
-#include "Commitment.h"
-#include "bitcoin_bignum/hash.h"
 #include <stdlib.h>
+#include "Zerocoin.h"
 
 namespace libzerocoin {
     

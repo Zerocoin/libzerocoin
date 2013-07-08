@@ -10,8 +10,6 @@
 * @license    This project is released under the MIT license.
 **/
 #include "Zerocoin.h"
-#include "Params.h"
-#include "ParamGeneration.h"
 
 namespace libzerocoin {
         
