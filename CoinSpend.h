@@ -35,12 +35,8 @@ public:
     CoinSpend(const Params* p,  Stream& strm):denomination(ZQ_LOVELACE),
     							accumulatorPoK(&p->accumulatorParams),
     							serialNumberSoK(p),
-    							commitmentPoK(&p->serialNumberSoKCommitmentGroup, &p->accumulatorParams.accumulatorPoKCommitmentGroup),
-    							metadata(0,0) {
+    							commitmentPoK(&p->serialNumberSoKCommitmentGroup, &p->accumulatorParams.accumulatorPoKCommitmentGroup) {
     	strm >> *this;
-		if(denomination == metadata.accumulatorId == 0 || metadata.txHash == 0){
-			throw ZerocoinException("Deserialization failed.");
-		}
     }
     /**Generates a proof spending a zerocoin.
      *
@@ -80,7 +76,7 @@ public:
 	 */
 	const CoinDenomination getDenomination();
 
-	bool Verify(const Accumulator& a) const;
+	bool Verify(const Accumulator& a, const SpendMetaData &metaData) const;
 
     IMPLEMENT_SERIALIZE
     (
@@ -91,12 +87,11 @@ public:
         READWRITE(accumulatorPoK);
         READWRITE(serialNumberSoK);
         READWRITE(commitmentPoK);
-        READWRITE(metadata);
     )
     
 private:
     const Params *params;
-	const uint256 signatureHash() const;
+	const uint256 signatureHash(const SpendMetaData &m) const;
 	// Denomination is stored as an INT because storing
 	// and enum raises amigiuities in the serialize code //FIXME if possible
 	int denomination;
@@ -106,7 +101,6 @@ private:
 	AccumulatorProofOfKnowledge accumulatorPoK;
 	SerialNumberSignatureOfKnowledge serialNumberSoK;
     CommitmentProofOfKnowledge commitmentPoK;
-	SpendMetaData metadata;
 };
 
 } /* namespace libzerocoin */

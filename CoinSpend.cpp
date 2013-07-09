@@ -21,8 +21,7 @@ CoinSpend::CoinSpend(const Params* p, const PrivateCoin& coin,
                              coinSerialNumber((coin.getSerialNumber())),
                              accumulatorPoK(&p->accumulatorParams),
                              serialNumberSoK(p),
-                             commitmentPoK(&p->serialNumberSoKCommitmentGroup, &p->accumulatorParams.accumulatorPoKCommitmentGroup),
-                             metadata(m) {
+                             commitmentPoK(&p->serialNumberSoKCommitmentGroup, &p->accumulatorParams.accumulatorPoKCommitmentGroup) {
                                  
     // Sanity check: let's verify that the Witness is valid with respect to
     // the coin and Accumulator provided.
@@ -52,7 +51,7 @@ CoinSpend::CoinSpend(const Params* p, const PrivateCoin& coin,
     
     // 4. Proves that the coin is correct w.r.t. serial number and hidden coin secret
     // (This proof is bound to the coin 'metadata', i.e., transaction hash)
-    this->serialNumberSoK = SerialNumberSignatureOfKnowledge(p, coin, fullCommitmentToCoinUnderSerialParams, signatureHash());
+    this->serialNumberSoK = SerialNumberSignatureOfKnowledge(p, coin, fullCommitmentToCoinUnderSerialParams, signatureHash(m));
 }
 
 const Bignum&
@@ -66,17 +65,17 @@ CoinSpend::getDenomination() {
 }
 
 bool
-CoinSpend::Verify(const Accumulator& a) const {
+CoinSpend::Verify(const Accumulator& a, const SpendMetaData &m) const {
     // Verify both of the sub-proofs using the given meta-data
     return  (a.getDenomination() == this->denomination)
             && commitmentPoK.Verify(serialCommitmentToCoinValue, accCommitmentToCoinValue)
             && accumulatorPoK.Verify(a, accCommitmentToCoinValue)
-            && serialNumberSoK.Verify(coinSerialNumber, serialCommitmentToCoinValue, signatureHash());
+            && serialNumberSoK.Verify(coinSerialNumber, serialCommitmentToCoinValue, signatureHash(m));
 }
 
-const uint256 CoinSpend::signatureHash() const {
+const uint256 CoinSpend::signatureHash(const SpendMetaData &m) const {
     CHashWriter h(0,0);
-    h << metadata << serialCommitmentToCoinValue << accCommitmentToCoinValue << commitmentPoK << accumulatorPoK;
+    h << m << serialCommitmentToCoinValue << accCommitmentToCoinValue << commitmentPoK << accumulatorPoK;
     return h.GetHash();
 }
 
