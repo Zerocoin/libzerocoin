@@ -16,6 +16,7 @@ namespace libzerocoin {
 
 CoinSpend::CoinSpend(const Params* p, const PrivateCoin& coin,
                      Accumulator& a, const AccumulatorWitness& witness, const SpendMetaData& m):
+                             params(p),
                              denomination(coin.getPublicCoin().getDenomination()),
                              coinSerialNumber((coin.getSerialNumber())),
                              accumulatorPoK(&p->accumulatorParams),
@@ -75,7 +76,7 @@ CoinSpend::Verify(const Accumulator& a) const {
 
 const uint256 CoinSpend::signatureHash() const {
     CHashWriter h(0,0);
-    h << metadata << serialCommitmentToCoinValue << accCommitmentToCoinValue << accumulatorPoK;
+    h << metadata << serialCommitmentToCoinValue << accCommitmentToCoinValue << commitmentPoK << accumulatorPoK;
     return h.GetHash();
 }
 

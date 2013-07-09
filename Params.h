@@ -203,6 +203,7 @@ public:
    IMPLEMENT_SERIALIZE
    (
         READWRITE(initialized);
+        READWRITE(accumulatorParams);
         READWRITE(coinCommitmentGroup);
         READWRITE(serialNumberSoKCommitmentGroup);
         READWRITE(zkp_iterations);
