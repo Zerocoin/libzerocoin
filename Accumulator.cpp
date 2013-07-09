@@ -23,7 +23,18 @@ Accumulator::Accumulator(const AccumulatorAndProofParams* p, const CoinDenominat
     
     this->value = this->params->accumulatorBase;
 }
-
+    
+Accumulator::Accumulator(const Params* p, const CoinDenomination d) {
+    this->params = &(p->accumulatorParams);
+    this->denomination = d;
+    
+    if (!(params->initialized)){
+        throw ZerocoinException("Invalid parameters for accumulator");
+    }
+    
+    this->value = this->params->accumulatorBase;
+}
+    
 void Accumulator::accumulate(const PublicCoin& coin) {
     // Make sure we're initialized
     if(!(this->value)){
@@ -78,10 +89,10 @@ const Bignum& AccumulatorWitness::getValue() const{
     return this->witness.getValue();
 }
 
-bool AccumulatorWitness::VerifyWitness(const Accumulator& a) const {
+bool AccumulatorWitness::VerifyWitness(const Accumulator& a, const PublicCoin &publicCoin) const {
     Accumulator temp(witness);
     temp += element;
-    return temp == a;
+    return (temp == a && this->element == publicCoin);
 }
 
 AccumulatorWitness& AccumulatorWitness::operator +=(

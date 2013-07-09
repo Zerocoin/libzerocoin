@@ -207,8 +207,20 @@ Test_Accumulator()
         }
         
         // Verify that the witness is correct
-        if (!wThree.VerifyWitness(accThree) ) {
+        if (!wThree.VerifyWitness(accThree, gCoins[0]->getPublicCoin()) ) {
             cout << "Witness not valid" << endl;
+            return false;
+        }
+        
+        // Serialization test: see if we can serialize the accumulator
+        CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
+        ss << accOne;
+        
+        // Deserialize it into a new object
+        Accumulator newAcc(g_Params, ss);
+        
+        // Compare the results
+        if (accOne.getValue() != newAcc.getValue()) {
             return false;
         }
         

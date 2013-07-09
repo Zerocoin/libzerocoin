@@ -12,11 +12,6 @@
 #ifndef ACCUMULATOR_H_
 #define ACCUMULATOR_H_
 
-//#include "bitcoin_bignum/bignum.h"
-//#include "bitcoin_bignum/serialize.h"
-//#include "Params.h"
-//#include "Coin.h"
-
 namespace libzerocoin {
 /**
 * \brief Implementation of the RSA-based accumulator.
@@ -24,11 +19,24 @@ namespace libzerocoin {
 
 class Accumulator {
 public:
+    
+    /**
+     * @brief      Construct an Accumulator from a stream.
+     * @param p    An AccumulatorAndProofParams object containing global parameters
+     * @param d    the denomination of coins we are accumulating
+     * @throw      Zerocoin exception in case of invalid parameters
+     **/
     template<typename Stream>
-	Accumulator(const AccumulatorAndProofParams* p, Stream& strm): params(p){
+	Accumulator(const AccumulatorAndProofParams* p, Stream& strm): params(p) {
     	strm >> *this;
     }
 
+    template<typename Stream>
+	Accumulator(const Params* p, Stream& strm) {
+        this->params = &(p->accumulatorParams);
+        strm >> *this;
+    }
+    
 	/**
     * @brief      Construct an Accumulator from a Params object.
     * @param p    A Params object containing global parameters
@@ -36,7 +44,9 @@ public:
     * @throw     Zerocoin exception in case of invalid parameters
     **/
 	Accumulator(const AccumulatorAndProofParams* p, const CoinDenomination d = ZQ_LOVELACE);
-    
+
+    Accumulator(const Params* p, const CoinDenomination d = ZQ_LOVELACE);
+
 	/**
 	* Accumulate a coin into the accumulator. Validates
 	* the coin prior to accumulation.
@@ -115,10 +125,11 @@ public:
 	const Bignum& getValue() const;
 
 	/** Checks that this is a witness to the accumulation of coin
-	 * @param the accumulator we are checking against.
+	 * @param a             the accumulator we are checking against.
+     * @param publicCoin    the coin we're providing a witness for
 	 * @return True if the witness computation validates
 	 */
-	bool VerifyWitness(const Accumulator& a) const;
+	bool VerifyWitness(const Accumulator& a, const PublicCoin &publicCoin) const;
 
 	/**
 	 * Adds rhs to the set whose's accumulation ware proving coin is a member of

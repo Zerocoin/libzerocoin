@@ -22,6 +22,13 @@ CoinSpend::CoinSpend(const Params* p, const PrivateCoin& coin,
                              serialNumberSoK(p),
                              commitmentPoK(&p->serialNumberSoKCommitmentGroup, &p->accumulatorParams.accumulatorPoKCommitmentGroup),
                              metadata(m) {
+                                 
+    // Sanity check: let's verify that the Witness is valid with respect to
+    // the coin and Accumulator provided.
+    if (!(witness.VerifyWitness(a, coin.getPublicCoin()))) {
+        throw std::invalid_argument("Accumulator witness does not verify");
+    }
+                                     
     // 1: Generate two separate commitments to the public coin (C), each under
     // a different set of public parameters. We do this because the RSA accumulator
     // has specific requirements for the commitment parameters that are not
