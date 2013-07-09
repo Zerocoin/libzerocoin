@@ -119,14 +119,14 @@ public:
     * @param k The bit length of the number.
     * @return
     */
-    static CBigNum RandKBitBigum(const uint k){
+    static CBigNum RandKBitBigum(const unsigned int k){
     	CBigNum ret;
 		if(!BN_rand(&ret, k, -1, 0)){
 			throw bignum_error("CBigNum:rand element : BN_rand failed");
 		}
 		return ret;
     }
-    
+
     /**Returns the size in bits of the underlying bignum.
      *
      * @return the size
@@ -169,7 +169,7 @@ public:
 
         if (sn < (int64)0)
         {
-            // Since the minimum signed integer cannot be represented as positive so long as its type is signed, 
+            // Since the minimum signed integer cannot be represented as positive so long as its type is signed,
             // and it's not well-defined what happens if you make it unsigned before negating it,
             // we instead increment the negative integer by 1, convert it, then increment the (now positive) unsigned integer by 1 to compensate
             n = -(sn + 1);
@@ -415,7 +415,7 @@ public:
     	CBigNum ret;
         if (!BN_mod_mul(&ret, this, &b, &m, pctx))
     			throw bignum_error("CBigNum::mul_mod : BN_mod_mul failed");
-        
+
     	return ret;
     }
 
@@ -453,7 +453,7 @@ public:
    			throw bignum_error("CBigNum::inverse*= :BN_mod_inverse");
    		return ret;
     }
-    
+
     /**
      * Generates a random (safe) prime of numBits bits
      * @param numBits the number of bits
@@ -466,7 +466,7 @@ public:
    			throw bignum_error("CBigNum::generatePrime*= :BN_generate_prime_ex");
    		return ret;
     }
-    
+
     /**
      * Calculates the greatest common divisor (GCD) of two numbers.
      * @param m the second element
@@ -494,11 +494,11 @@ public:
        	}
        	return ret;
     }
-    
+
     bool isOne() const {
         return BN_is_one(this);
     }
-    
+
     bool operator!() const
     {
         return BN_is_zero(this);

@@ -50,7 +50,7 @@ public:
      * The order of the group
      */
     Bignum groupOrder;
-    
+
     IMPLEMENT_SERIALIZE
     (
         READWRITE(initialized);
@@ -58,7 +58,7 @@ public:
         READWRITE(h);
         READWRITE(modulus);
         READWRITE(groupOrder);
-    )    
+    )
 };
 
 class AccumulatorAndProofParams {
@@ -108,7 +108,7 @@ public:
      * Required by the accumulator proof.
      */
     Bignum maxCoinValue;
-    
+
     /**
      * The second of two groups used to form a commitment to
      * a coin (which it self is a commitment to a serial number).
@@ -127,13 +127,13 @@ public:
      * Security parameter.
      * Bit length of the challenges used in the accumulator proof.
      */
-    uint k_prime;
+    unsigned int k_prime;
 
     /**
      * Security parameter.
      * The statistical zero-knowledgeness of the accumulator proof.
      */
-    uint k_dprime;
+    unsigned int k_dprime;
 
     IMPLEMENT_SERIALIZE
     (
@@ -167,7 +167,7 @@ public:
     * compromised. The integer "N" must be a MINIMUM of 1024
     * in length. 3072 bits is strongly recommended.
     **/
-    Params(Bignum accumulatorModulus, 
+    Params(Bignum accumulatorModulus,
            uint32_t securityLevel = ZEROCOIN_DEFAULT_SECURITYLEVEL);
 
     bool initialized;
@@ -192,13 +192,13 @@ public:
      * The number of iterations to use in the serial
      * number proof.
      */
-    uint zkp_iterations;
+    unsigned int zkp_iterations;
 
     /**
      * The amount of the hash function we use for
      * proofs.
      */
-    uint zkp_hash_len;
+    unsigned int zkp_hash_len;
 
    IMPLEMENT_SERIALIZE
    (
