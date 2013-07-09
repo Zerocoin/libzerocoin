@@ -33,8 +33,8 @@ public:
 
     template<typename Stream>
 	Accumulator(const Params* p, Stream& strm) {
-        this->params = &(p->accumulatorParams);
         strm >> *this;
+        this->params = &(p->accumulatorParams);
     }
     
 	/**
@@ -86,6 +86,7 @@ public:
 	IMPLEMENT_SERIALIZE
 	(
 		READWRITE(value);
+        READWRITE(denomination);
 	)
 private:
 	const AccumulatorAndProofParams* params;

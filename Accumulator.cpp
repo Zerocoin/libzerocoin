@@ -42,11 +42,13 @@ void Accumulator::accumulate(const PublicCoin& coin) {
     }
 
     if(this->denomination != coin.getDenomination()){
-        std::stringstream msg;
-        msg << "Wrong denomination for coin. Expected coins of denomination: " <<
-                this->denomination << ". Instead, got a coin of denomination: " <<
-                 coin.getDenomination() << std::ends;
-        throw std::invalid_argument(msg.str());
+        //std::stringstream msg;
+        std::string msg;
+        msg = "Wrong denomination for coin. Expected coins of denomination: ";
+        msg += this->denomination;
+        msg += ". Instead, got a coin of denomination: ";
+        msg += coin.getDenomination();
+        throw std::invalid_argument(msg);
     }
 
     if(coin.validate()){
