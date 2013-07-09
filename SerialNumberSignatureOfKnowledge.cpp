@@ -28,7 +28,7 @@ SerialNumberSignatureOfKnowledge::SerialNumberSignatureOfKnowledge(const
     if (params->coinCommitmentGroup.modulus != params->serialNumberSoKCommitmentGroup.groupOrder) {
         throw ZerocoinException("Groups are not structured correctly.");
     }
-    
+
 	Bignum a = params->coinCommitmentGroup.g;
 	Bignum b = params->coinCommitmentGroup.h;
 	Bignum g = params->serialNumberSoKCommitmentGroup.g;
@@ -73,7 +73,7 @@ SerialNumberSignatureOfKnowledge::SerialNumberSignatureOfKnowledge(const
 #ifdef ZEROCOIN_THREADING
 	#pragma omp parallel for
 #endif
-	for(uint i = 0; i < params->zkp_iterations; i++) {
+	for(unsigned int i = 0; i < params->zkp_iterations; i++) {
 		int bit = i % 8;
 		int byte = i / 8;
 
@@ -117,7 +117,7 @@ bool SerialNumberSignatureOfKnowledge::Verify(const Bignum& coinSerialNumber, co
 #ifdef ZEROCOIN_THREADING
 	#pragma omp parallel for
 #endif
-	for(uint i = 0; i < params->zkp_iterations; i++){
+	for(unsigned int i = 0; i < params->zkp_iterations; i++){
 		int bit = i % 8;
 		int byte = i / 8;
 		bool challenge_bit = ((hashbytes[byte] >> bit) & 0x01);
@@ -130,7 +130,7 @@ bool SerialNumberSignatureOfKnowledge::Verify(const Bignum& coinSerialNumber, co
 							params->serialNumberSoKCommitmentGroup.modulus;
 		}
 	}
-	for(uint i = 0; i < params->zkp_iterations; i++){
+	for(unsigned int i = 0; i < params->zkp_iterations; i++){
 		hasher << tprime[i];
 	}
 	return hasher.GetHash() == hash;
