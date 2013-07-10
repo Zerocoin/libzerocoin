@@ -73,7 +73,7 @@ SerialNumberSignatureOfKnowledge::SerialNumberSignatureOfKnowledge(const
 #ifdef ZEROCOIN_THREADING
 	#pragma omp parallel for
 #endif
-	for(uint i = 0; i < params->zkp_iterations; i++) {
+	for(uint32_t i = 0; i < params->zkp_iterations; i++) {
 		int bit = i % 8;
 		int byte = i / 8;
 
@@ -117,7 +117,7 @@ bool SerialNumberSignatureOfKnowledge::Verify(const Bignum& coinSerialNumber, co
 #ifdef ZEROCOIN_THREADING
 	#pragma omp parallel for
 #endif
-	for(uint i = 0; i < params->zkp_iterations; i++) {
+	for(uint32_t i = 0; i < params->zkp_iterations; i++) {
 		int bit = i % 8;
 		int byte = i / 8;
 		bool challenge_bit = ((hashbytes[byte] >> bit) & 0x01);
@@ -130,7 +130,7 @@ bool SerialNumberSignatureOfKnowledge::Verify(const Bignum& coinSerialNumber, co
 			            params->serialNumberSoKCommitmentGroup.modulus;
 		}
 	}
-	for(uint i = 0; i < params->zkp_iterations; i++) {
+	for(uint32_t i = 0; i < params->zkp_iterations; i++) {
 		hasher << tprime[i];
 	}
 	return hasher.GetHash() == hash;

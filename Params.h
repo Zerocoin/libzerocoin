@@ -127,13 +127,13 @@ public:
 	 * Security parameter.
 	 * Bit length of the challenges used in the accumulator proof.
 	 */
-	uint k_prime;
+	uint32_t k_prime;
 
 	/**
 	 * Security parameter.
 	 * The statistical zero-knowledgeness of the accumulator proof.
 	 */
-	uint k_dprime;
+	uint32_t k_dprime;
 
 	IMPLEMENT_SERIALIZE
 	(
@@ -192,13 +192,13 @@ public:
 	 * The number of iterations to use in the serial
 	 * number proof.
 	 */
-	uint zkp_iterations;
+	uint32_t zkp_iterations;
 
 	/**
 	 * The amount of the hash function we use for
 	 * proofs.
 	 */
-	uint zkp_hash_len;
+	uint32_t zkp_hash_len;
 
 	IMPLEMENT_SERIALIZE
 	(
