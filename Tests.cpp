@@ -32,8 +32,9 @@ uint32_t    gNumTests        = 0;
 uint32_t    gSuccessfulTests = 0;
 
 // Proof size
-uint32_t    gProofSize      = 0;
-uint32_t    gCoinSize       = 0;
+uint32_t    gProofSize			= 0;
+uint32_t    gCoinSize			= 0;
+uint32_t	gSerialNumberSize	= 0;
 
 // Global coin array
 PrivateCoin    *gCoins[TESTS_COINS_TO_ACCUMULATE];
@@ -368,8 +369,13 @@ Test_MintAndSpend()
 		gProofSize = ss.size();
 		CoinSpend newSpend(g_Params, ss);
 
-		// Finally, see if we can verify the deserialized proof (return our result)
+		// See if we can verify the deserialized proof (return our result)
 		bool ret =  newSpend.Verify(acc, m);
+		
+		// Extract the serial number
+		Bignum serialNumber = newSpend.getCoinSerialNumber();
+		gSerialNumberSize = ceil((double)serialNumber.bitSize() / 8.0);
+		
 		return ret;
 	} catch (runtime_error &e) {
 		cout << e.what() << endl;
@@ -401,6 +407,7 @@ Test_RunAllTests()
 	LogTestResult("a minted coin can be spent", Test_MintAndSpend);
 
 	cout << endl << "Average coin size is " << gCoinSize << " bytes." << endl;
+	cout << "Serial number size is " << gSerialNumberSize << " bytes." << endl;
 	cout << "Spend proof size is " << gProofSize << " bytes." << endl;
 
 	// Summarize test results
