@@ -46,7 +46,7 @@ all: libzerocoin test tutorial
 libzerocoin: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -g -fopenmp -L/opt/local/lib -shared -o "libzerocoin.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -fopenmp -L/opt/local/lib -shared -o "libzerocoin.so" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -74,7 +74,7 @@ benchmark: $(OBJS) $(USER_OBJS)
 tutorial: $(OBJS) $(USER_OBJS) 
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -g -fopenmp -L/opt/local/lib -o "tutorial" ../Tutorial.cpp $(OBJS) $(USER_OBJS) $(LIBS)
+	g++ -fopenmp -L/opt/local/lib -o "tutorial" ../Tutorial.cpp $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '  
 
