@@ -208,6 +208,13 @@ ZerocoinTutorial()
 		// transaction.
 		libzerocoin::CoinSpend spend(params, newCoin, accumulator, witness, metaData);
 
+		// This is a sanity check. The CoinSpend object should always verify,
+		// but why not check before we put it onto the wire?
+		if (!spend.Verify(accumulator, metaData)) {
+			cout << "ERROR: Our new CoinSpend transaction did not verify!" << endl;
+			return false;
+		}
+		
 		// Serialize the CoinSpend object into a buffer.
 		CDataStream serializedCoinSpend(SER_NETWORK, PROTOCOL_VERSION);
 		serializedCoinSpend << spend;
@@ -229,11 +236,14 @@ ZerocoinTutorial()
 		libzerocoin::CoinSpend newSpend(params, serializedCoinSpend);
 
 		// Create a new metadata object to contain the hash of the received
-		// ZEROCOIN_SPEND transactiond ata
-		// Place "transactionHash" and "accumulatorBlockHash" into a new
-		// SpendMetaData object.
+		// ZEROCOIN_SPEND transaction. If we were a real client we'd actually
+		// compute the hash of the received transaction here.
 		libzerocoin::SpendMetaData newMetadata(accumulatorID, transactionHash);
 		
+		// If we were a real client we would now re-compute the Accumulator
+		// from the information given in the ZEROCOIN_SPEND transaction.
+		// For our purposes we'll just use the one we calculated above.
+		//
 		// Verify that the spend is valid with respect to the Accumulator
 		// and the Metadata
 		if (!newSpend.Verify(accumulator, newMetadata)) {
@@ -245,7 +255,7 @@ ZerocoinTutorial()
 		// were a real Zerocoin client we would now check that the serial number
 		// has not been spent before (in another ZEROCOIN_SPEND) transaction.
 		// The serial number is stored as a Bignum.
-		Bignum serialNumber = 	newSpend.getCoinSerialNumber();
+		Bignum serialNumber = newSpend.getCoinSerialNumber();
 
 		cout << "Successfully verified a coin spend transaction." << endl;
 		cout << endl << "Coin serial number is:" << endl << serialNumber << endl;
