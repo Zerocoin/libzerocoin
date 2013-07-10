@@ -1,14 +1,14 @@
 /**
-* @file       Commitment.h
-*
-* @brief      Commitment and CommitmentProof classes for the Zerocoin library.
-*
-* @author     Ian Miers, Christina Garman and Matthew Green
-* @date       June 2013
-*
-* @copyright  Copyright 2013 Ian Miers, Christina Garman and Matthew Green
-* @license    This project is released under the MIT license.
-**/
+ * @file       Commitment.h
+ *
+ * @brief      Commitment and CommitmentProof classes for the Zerocoin library.
+ *
+ * @author     Ian Miers, Christina Garman and Matthew Green
+ * @date       June 2013
+ *
+ * @copyright  Copyright 2013 Ian Miers, Christina Garman and Matthew Green
+ * @license    This project is released under the MIT license.
+ **/
 
 #ifndef COMMITMENT_H_
 #define COMMITMENT_H_
@@ -25,7 +25,7 @@
 
 namespace libzerocoin {
 
-    /**
+/**
  * A commitment, complete with contents and opening randomness.
  * These should remain secret. Publish only the commitment value.
  */
@@ -47,9 +47,9 @@ private:
 	const Bignum contents;
 	IMPLEMENT_SERIALIZE
 	(
-		READWRITE(commitmentValue);
-		READWRITE(randomness);
-		READWRITE(contents);
+	    READWRITE(commitmentValue);
+	    READWRITE(randomness);
+	    READWRITE(contents);
 	)
 };
 
@@ -68,38 +68,38 @@ public:
 	 */
 	CommitmentProofOfKnowledge(const IntegerGroupParams* aParams, const IntegerGroupParams* bParams, const Commitment& a, const Commitment& b);
 	//FIXME: is it best practice that this is here?
-    template<typename Stream>
-     CommitmentProofOfKnowledge(const IntegerGroupParams* aParams,
-     		const IntegerGroupParams* bParams, Stream& strm): ap(aParams), bp(bParams)
-     {
-         strm >> *this;
-     }
+	template<typename Stream>
+	CommitmentProofOfKnowledge(const IntegerGroupParams* aParams,
+	                           const IntegerGroupParams* bParams, Stream& strm): ap(aParams), bp(bParams)
+	{
+		strm >> *this;
+	}
 
-    const Bignum calculateChallenge(const Bignum& a, const Bignum& b, const Bignum &commitOne, const Bignum &commitTwo) const;
+	const Bignum calculateChallenge(const Bignum& a, const Bignum& b, const Bignum &commitOne, const Bignum &commitTwo) const;
 
 	/**Verifies the proof
 	 *
 	 * @return true if the proof is valid.
 	 */
-    /**Verifies the proof of equality of the two commitments
-     *
-     * @param A value of commitment one
-     * @param B value of commitment two
-     * @return
-     */
+	/**Verifies the proof of equality of the two commitments
+	 *
+	 * @param A value of commitment one
+	 * @param B value of commitment two
+	 * @return
+	 */
 	bool Verify(const Bignum& A, const Bignum& B) const;
 	IMPLEMENT_SERIALIZE
 	(
-        READWRITE(S1);
-        READWRITE(S2);
-        READWRITE(S3);
-        READWRITE(challenge);
+	    READWRITE(S1);
+	    READWRITE(S2);
+	    READWRITE(S3);
+	    READWRITE(challenge);
 	)
 private:
 	const IntegerGroupParams *ap, *bp;
 
 	Bignum S1, S2, S3, challenge;
 };
-    
+
 } /* namespace libzerocoin */
 #endif /* COMMITMENT_H_ */

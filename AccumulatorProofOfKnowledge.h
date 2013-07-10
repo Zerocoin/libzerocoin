@@ -1,14 +1,14 @@
 /**
-* @file       AccumulatorProofOfKnowledge.h
-*
-* @brief      AccumulatorProofOfKnowledge class for the Zerocoin library.
-*
-* @author     Ian Miers, Christina Garman and Matthew Green
-* @date       June 2013
-*
-* @copyright  Copyright 2013 Ian Miers, Christina Garman and Matthew Green
-* @license    This project is released under the MIT license.
-**/
+ * @file       AccumulatorProofOfKnowledge.h
+ *
+ * @brief      AccumulatorProofOfKnowledge class for the Zerocoin library.
+ *
+ * @author     Ian Miers, Christina Garman and Matthew Green
+ * @date       June 2013
+ *
+ * @copyright  Copyright 2013 Ian Miers, Christina Garman and Matthew Green
+ * @license    This project is released under the MIT license.
+ **/
 
 #ifndef ACCUMULATEPROOF_H_
 #define ACCUMULATEPROOF_H_
@@ -34,57 +34,57 @@ public:
 	bool Verify(const Accumulator& a,const Bignum& valueOfCommitmentToCoin) const;
 
 	IMPLEMENT_SERIALIZE
-    (
-        READWRITE(C_e);
-        READWRITE(C_u);
-        READWRITE(C_r);
-        READWRITE(st_1);
-        READWRITE(st_2);
-        READWRITE(st_3);
-        READWRITE(t_1);
-        READWRITE(t_2);
-        READWRITE(t_3);
-        READWRITE(t_4);
-        READWRITE(s_alpha);
-        READWRITE(s_beta);
-        READWRITE(s_zeta);
-        READWRITE(s_sigma);
-        READWRITE(s_eta);
-        READWRITE(s_epsilon);
-        READWRITE(s_delta);
-        READWRITE(s_xi);
-        READWRITE(s_phi);
-        READWRITE(s_gamma);
-        READWRITE(s_psi);
-    )
+	(
+	    READWRITE(C_e);
+	    READWRITE(C_u);
+	    READWRITE(C_r);
+	    READWRITE(st_1);
+	    READWRITE(st_2);
+	    READWRITE(st_3);
+	    READWRITE(t_1);
+	    READWRITE(t_2);
+	    READWRITE(t_3);
+	    READWRITE(t_4);
+	    READWRITE(s_alpha);
+	    READWRITE(s_beta);
+	    READWRITE(s_zeta);
+	    READWRITE(s_sigma);
+	    READWRITE(s_eta);
+	    READWRITE(s_epsilon);
+	    READWRITE(s_delta);
+	    READWRITE(s_xi);
+	    READWRITE(s_phi);
+	    READWRITE(s_gamma);
+	    READWRITE(s_psi);
+	)
 private:
 	const AccumulatorAndProofParams* params;
 
-    /* Return values for proof */
-    Bignum C_e;
-    Bignum C_u;
-    Bignum C_r;
+	/* Return values for proof */
+	Bignum C_e;
+	Bignum C_u;
+	Bignum C_r;
 
-    Bignum st_1;
-    Bignum st_2;
-    Bignum st_3;
+	Bignum st_1;
+	Bignum st_2;
+	Bignum st_3;
 
-    Bignum t_1;
-    Bignum t_2;
-    Bignum t_3;
-    Bignum t_4;
+	Bignum t_1;
+	Bignum t_2;
+	Bignum t_3;
+	Bignum t_4;
 
-    Bignum s_alpha;
-    Bignum s_beta;
-    Bignum s_zeta;
-    Bignum s_sigma;
-    Bignum s_eta;
-    Bignum s_epsilon;
-    Bignum s_delta;
-    Bignum s_xi;
-    Bignum s_phi;
-    Bignum s_gamma;
-    Bignum s_psi;
+	Bignum s_alpha;
+	Bignum s_beta;
+	Bignum s_zeta;
+	Bignum s_sigma;
+	Bignum s_eta;
+	Bignum s_epsilon;
+	Bignum s_delta;
+	Bignum s_xi;
+	Bignum s_phi;
+	Bignum s_gamma;
+	Bignum s_psi;
 };
 
 } /* namespace libzerocoin */

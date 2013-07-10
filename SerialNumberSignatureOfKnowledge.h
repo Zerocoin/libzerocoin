@@ -52,12 +52,12 @@ public:
 
 	IMPLEMENT_SERIALIZE
 	(
-		READWRITE(s_notprime);
-		READWRITE(sprime);
-		READWRITE(hash);
+	    READWRITE(s_notprime);
+	    READWRITE(sprime);
+	    READWRITE(hash);
 	)
 private:
-	 const Params* params;
+	const Params* params;
 	// challenge hash
 	uint256 hash; //TODO For efficiency, should this be a bitset where Templates define params?
 
@@ -68,7 +68,7 @@ private:
 	vector<Bignum> s_notprime;
 	vector<Bignum> sprime;
 	inline Bignum challengeCalculation(const Bignum& a_exp, const Bignum& b_exp,
-			 const Bignum& h_exp) const;
+	                                   const Bignum& h_exp) const;
 };
 
 } /* namespace libzerocoin */

@@ -15,7 +15,7 @@ namespace libzerocoin {
 
 void CalculateParams(Params &params, Bignum N, std::string aux, uint32_t securityLevel);
 void calculateGroupParamLengths(uint32_t maxPLen, uint32_t securityLevel,
-                            uint32_t *pLen, uint32_t *qLen);
+                                uint32_t *pLen, uint32_t *qLen);
 
 // Constants
 #define STRING_COMMIT_GROUP         "COIN_COMMITMENT_GROUP"
@@ -39,10 +39,10 @@ uint256             calculateHash(uint256 input);
 IntegerGroupParams  deriveIntegerGroupParams(uint256 seed, uint32_t pLen, uint32_t qLen);
 IntegerGroupParams  deriveIntegerGroupFromOrder(Bignum &groupOrder);
 void                calculateGroupModulusAndOrder(uint256 seed, uint32_t pLen, uint32_t qLen,
-                                                  Bignum *resultModulus, Bignum *resultGroupOrder,
-                                                  uint256 *resultPseed, uint256 *resultQseed);
+        Bignum *resultModulus, Bignum *resultGroupOrder,
+        uint256 *resultPseed, uint256 *resultQseed);
 Bignum              calculateGroupGenerator(uint256 seed, uint256 pSeed, uint256 qSeed, Bignum modulus,
-                                            Bignum groupOrder, uint32_t index);
+        Bignum groupOrder, uint32_t index);
 Bignum              generateRandomPrime(uint32_t primeBitLen, uint256 in_seed, uint256 *out_seed,
                                         uint32_t *prime_gen_counter);
 Bignum              generateIntegerFromSeed(uint32_t numBits, uint256 seed, uint32_t *numIterations);

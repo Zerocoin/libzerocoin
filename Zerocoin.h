@@ -34,7 +34,7 @@
 class ZerocoinException : public std::runtime_error
 {
 public:
-    explicit ZerocoinException(const std::string& str) : std::runtime_error(str) {}
+	explicit ZerocoinException(const std::string& str) : std::runtime_error(str) {}
 };
 
 #include "bitcoin_bignum/serialize.h"

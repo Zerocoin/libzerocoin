@@ -15,15 +15,15 @@
 #include "bitcoin_bignum/bignum.h"
 #include "Params.h"
 namespace libzerocoin {
-    
-enum  CoinDenomination{
+
+enum  CoinDenomination {
     ZQ_LOVELACE = 1,
     ZQ_GOLDWASSER = 10,
     ZQ_RACKOFF = 25,
     ZQ_PEDERSEN = 50,
     ZQ_WILLIAMSON = 100 // Malcolm J. Williamson,
-    // the scientist who actually invented
-    // Public key cryptography
+                    // the scientist who actually invented
+                    // Public key cryptography
 };
 
 /** A Public coin is the part of a coin that
@@ -34,41 +34,41 @@ enum  CoinDenomination{
  */
 class PublicCoin {
 public:
-    template<typename Stream>
-    PublicCoin(const Params* p, Stream& strm): params(p) {
-        strm >> *this;
-    }
+	template<typename Stream>
+	PublicCoin(const Params* p, Stream& strm): params(p) {
+		strm >> *this;
+	}
 
-    PublicCoin( const Params* p);
-    
-    /**Generates a public coin
-     *
-     * @param p cryptographic paramters
-     * @param coin the value of the commitment.
-     * @param denomination The denomination of the coin. Defaults to ZQ_LOVELACE
-     */
-    PublicCoin( const Params* p, const Bignum& coin, const CoinDenomination d = ZQ_LOVELACE);
-    const Bignum& getValue() const;
-    const CoinDenomination getDenomination() const;
-    bool operator==(const PublicCoin& rhs) const;
-    bool operator!=(const PublicCoin& rhs) const;
-    /** Checks that a coin prime
-     *  and in the appropriate range
-     *  given the parameters
-     * @return true if valid
-     */
-    bool validate() const;
-    IMPLEMENT_SERIALIZE
-    (
-        READWRITE(value);
-        READWRITE(denomination);
-    )
+	PublicCoin( const Params* p);
+
+	/**Generates a public coin
+	 *
+	 * @param p cryptographic paramters
+	 * @param coin the value of the commitment.
+	 * @param denomination The denomination of the coin. Defaults to ZQ_LOVELACE
+	 */
+	PublicCoin( const Params* p, const Bignum& coin, const CoinDenomination d = ZQ_LOVELACE);
+	const Bignum& getValue() const;
+	const CoinDenomination getDenomination() const;
+	bool operator==(const PublicCoin& rhs) const;
+	bool operator!=(const PublicCoin& rhs) const;
+	/** Checks that a coin prime
+	 *  and in the appropriate range
+	 *  given the parameters
+	 * @return true if valid
+	 */
+	bool validate() const;
+	IMPLEMENT_SERIALIZE
+	(
+	    READWRITE(value);
+	    READWRITE(denomination);
+	)
 private:
-    const Params* params;
-    Bignum value;
-    // Denomination is stored as an INT because storing
-    // and enum raises amigiuities in the serialize code //FIXME if possible
-    int denomination;
+	const Params* params;
+	Bignum value;
+	// Denomination is stored as an INT because storing
+	// and enum raises amigiuities in the serialize code //FIXME if possible
+	int denomination;
 };
 
 /**
@@ -84,39 +84,39 @@ private:
  */
 class PrivateCoin {
 public:
-    template<typename Stream>
-    PrivateCoin(const Params* p, Stream& strm): params(p){
-        strm >> *this;
-    }
-    PrivateCoin(const Params* p,const CoinDenomination denomination = ZQ_LOVELACE);
-    const PublicCoin& getPublicCoin() const;
-    const Bignum& getSerialNumber() const;
-    const Bignum& getRandomness() const;
-    
-    IMPLEMENT_SERIALIZE
-    (
-        READWRITE(publicCoin);
-        READWRITE(randomness);
-        READWRITE(serialNumber);
-    )
+	template<typename Stream>
+	PrivateCoin(const Params* p, Stream& strm): params(p) {
+		strm >> *this;
+	}
+	PrivateCoin(const Params* p,const CoinDenomination denomination = ZQ_LOVELACE);
+	const PublicCoin& getPublicCoin() const;
+	const Bignum& getSerialNumber() const;
+	const Bignum& getRandomness() const;
+
+	IMPLEMENT_SERIALIZE
+	(
+	    READWRITE(publicCoin);
+	    READWRITE(randomness);
+	    READWRITE(serialNumber);
+	)
 private:
-    const Params* params;
-    PublicCoin publicCoin;
-    Bignum randomness;
-    Bignum serialNumber;
-    
-    /**
-     * @brief Mint a new coin.
-     * @param denomination the denomination of the coin to mint
-     * @throws ZerocoinException if the process takes too long
-     *
-     * Generates a new Zerocoin by (a) selecting a random serial
-     * number, (b) committing to this serial number and repeating until
-     * the resulting commitment is prime. Stores the
-     * resulting commitment (coin) and randomness (trapdoor).
-     **/
-    void mintCoin(const CoinDenomination denomination);
+	const Params* params;
+	PublicCoin publicCoin;
+	Bignum randomness;
+	Bignum serialNumber;
+
+	/**
+	 * @brief Mint a new coin.
+	 * @param denomination the denomination of the coin to mint
+	 * @throws ZerocoinException if the process takes too long
+	 *
+	 * Generates a new Zerocoin by (a) selecting a random serial
+	 * number, (b) committing to this serial number and repeating until
+	 * the resulting commitment is prime. Stores the
+	 * resulting commitment (coin) and randomness (trapdoor).
+	 **/
+	void mintCoin(const CoinDenomination denomination);
 };
-    
+
 } /* namespace libzerocoin */
 #endif /* COIN_H_ */

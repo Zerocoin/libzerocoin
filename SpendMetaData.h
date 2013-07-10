@@ -40,11 +40,11 @@ public:
 	 * spending a zerocoin (excluding the coinspend proof)
 	 */
 	uint256 txHash; // The Hash of the rest of the transaction the spend proof is n.
-						// Allows us to sign the transaction.
-    IMPLEMENT_SERIALIZE
-    (
-    	READWRITE(accumulatorId);
-    	READWRITE(txHash);
+	// Allows us to sign the transaction.
+	IMPLEMENT_SERIALIZE
+	(
+	    READWRITE(accumulatorId);
+	    READWRITE(txHash);
 	)
 };
 
