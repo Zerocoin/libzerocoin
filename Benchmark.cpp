@@ -262,7 +262,7 @@ Test_Accumulator()
 		}
 
 		// Verify that the witness is correct
-		if (!wThree.VerifyWitness(accThree) ) {
+		if (!wThree.VerifyWitness(accThree, gCoins[0]->getPublicCoin()) ) {
 			cout << "Witness not valid" << endl;
 			return false;
 		}
@@ -351,7 +351,7 @@ Test_MintAndSpend()
 
 		// Finally, see if we can verify the deserialized proof (return our result)
 		timer.start();
-		bool ret = newSpend.Verify(acc);
+		bool ret = newSpend.Verify(acc, m);
 		timer.stop();
 
 		cout << "\tSPEND VERIFY ELAPSED TIME: " << timer.duration() << " ms\t" << timer.duration()*0.001 << " s" << endl;
