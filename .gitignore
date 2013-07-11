@@ -15,6 +15,7 @@ local.properties
 tests
 benchmark
 paramgen
+tutorial
 
 # External tool builders
 .externalToolBuilders/
