@@ -119,7 +119,7 @@ public:
     * @param k The bit length of the number.
     * @return
     */
-    static CBigNum RandKBitBigum(const uint k){
+    static CBigNum RandKBitBigum(const uint32_t k){
     	CBigNum ret;
 		if(!BN_rand(&ret, k, -1, 0)){
 			throw bignum_error("CBigNum:rand element : BN_rand failed");
