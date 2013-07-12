@@ -28,7 +28,7 @@ using namespace libzerocoin;
 #define COLOR_STR_NORMAL  "\033[0m"
 #define COLOR_STR_RED     "\033[31m"
 
-#define TESTS_COINS_TO_ACCUMULATE   10
+#define TESTS_COINS_TO_ACCUMULATE   50
 
 // Global test counters
 uint32_t    gNumTests        = 0;

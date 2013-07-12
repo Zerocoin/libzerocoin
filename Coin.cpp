@@ -144,13 +144,15 @@ void PrivateCoin::mintCoinFast(const CoinDenomination denomination) {
 			// Success! We're done.
 			return;
 		}
-				
+		
+		// Generate a new random "r_delta" in 0...{q-1}
+		Bignum r_delta = Bignum::randBignum(this->params->coinCommitmentGroup.groupOrder);
+
 		// The commitment was not prime. Increment "r" and recalculate "C":
-		// r = r + 1 mod q
+		// r = r + r_delta mod q
 		// C = C * h mod p
-		r = (r + Bignum(1)) % this->params->coinCommitmentGroup.groupOrder;
-		commitmentValue = commitmentValue.mul_mod(this->params->coinCommitmentGroup.h,
-												  this->params->coinCommitmentGroup.modulus);
+		r = (r + r_delta) % this->params->coinCommitmentGroup.groupOrder;
+		commitmentValue = commitmentValue.mul_mod(this->params->coinCommitmentGroup.h.pow_mod(r_delta, this->params->coinCommitmentGroup.modulus), this->params->coinCommitmentGroup.modulus);
 	}
 		
 	// We only get here if we did not find a coin within
