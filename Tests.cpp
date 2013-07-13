@@ -26,6 +26,7 @@ using namespace libzerocoin;
 #define COLOR_STR_RED     "\033[31m"
 
 #define TESTS_COINS_TO_ACCUMULATE   10
+#define NON_PRIME_TESTS				100
 
 // Global test counters
 uint32_t    gNumTests        = 0;
@@ -333,6 +334,53 @@ Test_MintCoin()
 	return true;
 }
 
+bool Test_InvalidCoin()
+{
+	Bignum coinValue;
+	
+	try {
+		// Pick a random non-prime Bignum
+		for (uint32_t i = 0; i < NON_PRIME_TESTS; i++) {
+			coinValue = Bignum::randBignum(g_Params->coinCommitmentGroup.modulus);
+			coinValue = coinValue * 2;
+			if (!coinValue.isPrime()) break;
+		}
+				
+		PublicCoin pubCoin(g_Params);
+		if (pubCoin.isValid()) {
+			// A blank coin should not be valid!
+			return false;
+		}		
+		
+		PublicCoin pubCoin2(g_Params, coinValue, ZQ_LOVELACE);
+		if (pubCoin2.isValid()) {
+			// A non-prime coin should not be valid!
+			return false;
+		}
+		
+		PublicCoin pubCoin3 = pubCoin2;
+		if (pubCoin2.isValid()) {
+			// A copy of a non-prime coin should not be valid!
+			return false;
+		}
+		
+		// Serialize and deserialize the coin
+		CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
+		ss << pubCoin;
+		PublicCoin pubCoin4(g_Params, ss);
+		if (pubCoin4.isValid()) {
+			// A deserialized copy of a non-prime coin should not be valid!
+			return false;
+		}
+		
+	} catch (runtime_error &e) {
+		cout << "Caught exception: " << e.what() << endl;
+		return false;
+	}
+	
+	return true;
+}
+
 bool
 Test_MintAndSpend()
 {
@@ -402,6 +450,7 @@ Test_RunAllTests()
 	LogTestResult("group/field parameters can be generated", Test_GenerateGroupParams);
 	LogTestResult("parameter generation is correct", Test_ParamGen);
 	LogTestResult("coins can be minted", Test_MintCoin);
+	LogTestResult("invalid coins will be rejected", Test_InvalidCoin);
 	LogTestResult("the accumulator works", Test_Accumulator);
 	LogTestResult("the commitment equality PoK works", Test_EqualityPoK);
 	LogTestResult("a minted coin can be spent", Test_MintAndSpend);
