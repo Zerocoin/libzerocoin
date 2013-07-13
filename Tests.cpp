@@ -476,6 +476,6 @@ Test_RunAllTests()
 int main(int argc, char **argv)
 {
 	cout << "libzerocoin v" << ZEROCOIN_VERSION_STRING << " test utility." << endl << endl;
-
+	
 	Test_RunAllTests();
 }

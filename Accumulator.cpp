@@ -48,14 +48,14 @@ void Accumulator::accumulate(const PublicCoin& coin) {
 		msg += this->denomination;
 		msg += ". Instead, got a coin of denomination: ";
 		msg += coin.getDenomination();
-		throw std::invalid_argument(msg);
+		throw ZerocoinException(msg);
 	}
 
 	if(coin.isValid()) {
 		// Compute new accumulator = "old accumulator"^{element} mod N
 		this->value = this->value.pow_mod(coin.getValue(), this->params->accumulatorModulus);
 	} else {
-		throw std::invalid_argument("Coin is not valid");
+		throw ZerocoinException("Coin is not valid");
 	}
 }
 
