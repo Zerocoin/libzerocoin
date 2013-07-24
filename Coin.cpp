@@ -17,21 +17,23 @@ namespace libzerocoin {
 
 //PublicCoin class
 PublicCoin::PublicCoin(const Params* p):
-	params(p), denomination(ZQ_LOVELACE) {
-	if(this->params->initialized == false) {
-		throw std::invalid_argument("Params are not initialized");
+	params(p), valid(false), denomination(ZQ_LOVELACE) {
+	if (this->params->initialized == false) {
+		throw ZerocoinException("Params are not initialized");
 	}
 };
 
 PublicCoin::PublicCoin(const Params* p, const Bignum& coin, const CoinDenomination d):
-	params(p), value(coin), denomination(d) {
-	if(this->params->initialized == false) {
-		throw std::invalid_argument("Params are not initialized");
+	params(p), valid(false), value(coin), denomination(d) {
+	if (this->params->initialized == false) {
+		throw ZerocoinException("Params are not initialized");
 	}
+	
+	this->valid = this->validate();
 };
 
 bool PublicCoin::operator==(const PublicCoin& rhs) const {
-	return this->value == rhs.value;// FIXME check param equality
+	return this->value == rhs.value; // FIXME check param equality
 }
 
 bool PublicCoin::operator!=(const PublicCoin& rhs) const {
@@ -54,7 +56,7 @@ bool PublicCoin::validate() const {
 PrivateCoin::PrivateCoin(const Params* p, const CoinDenomination denomination): params(p), publicCoin(p) {
 	// Verify that the parameters are valid
 	if(this->params->initialized == false) {
-		throw std::invalid_argument("Params are not initialized");
+		throw ZerocoinException("Params are not initialized");
 	}
 
 #ifdef ZEROCOIN_FAST_MINT
