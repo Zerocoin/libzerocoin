@@ -110,11 +110,17 @@ ZerocoinTutorial()
 		//                  this particular zerocoin has not been minted before.
 		/********************************************************************/
 
-		// Deserialize the public coin into a fresh object. This will
-		// automatically validate that the coin is correctly structured and
-		// will throw an exception if it isn't. (You need to handle those.)
+		// Deserialize the public coin into a fresh object.
 		libzerocoin::PublicCoin pubCoinNew(params, serializedCoin);
 
+		// Now make sure the coin is valid.
+		if (!pubCoinNew.isValid()) {
+			// If this returns false, don't accept the coin for any purpose!
+			// Any ZEROCOIN_MINT with an invalid coin should NOT be
+			// accepted as a valid transaction in the block chain.
+			cout << "Error: coin is not valid!";
+		}
+		
 		cout << "Deserialized and verified the coin." << endl;
 
 		/********************************************************************/

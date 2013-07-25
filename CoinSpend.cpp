@@ -26,7 +26,7 @@ CoinSpend::CoinSpend(const Params* p, const PrivateCoin& coin,
 	// Sanity check: let's verify that the Witness is valid with respect to
 	// the coin and Accumulator provided.
 	if (!(witness.VerifyWitness(a, coin.getPublicCoin()))) {
-		throw std::invalid_argument("Accumulator witness does not verify");
+		throw ZerocoinException("Accumulator witness does not verify");
 	}
 
 	// 1: Generate two separate commitments to the public coin (C), each under

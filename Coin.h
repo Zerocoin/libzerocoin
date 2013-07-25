@@ -37,6 +37,7 @@ public:
 	template<typename Stream>
 	PublicCoin(const Params* p, Stream& strm): params(p) {
 		strm >> *this;
+		this->valid = this->validate();
 	}
 
 	PublicCoin( const Params* p);
@@ -57,6 +58,7 @@ public:
 	 *  given the parameters
 	 * @return true if valid
 	 */
+	bool isValid() const { return this->valid; }
 	bool validate() const;
 	IMPLEMENT_SERIALIZE
 	(
@@ -65,6 +67,7 @@ public:
 	)
 private:
 	const Params* params;
+	bool valid;
 	Bignum value;
 	// Denomination is stored as an INT because storing
 	// and enum raises amigiuities in the serialize code //FIXME if possible
