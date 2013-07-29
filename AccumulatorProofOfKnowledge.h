@@ -58,7 +58,7 @@ public:
 	    READWRITE(s_psi);
 	)
 private:
-	const AccumulatorAndProofParams* params;
+	const AccumulatorAndProofParams* const params;
 
 	/* Return values for proof */
 	Bignum C_e;
