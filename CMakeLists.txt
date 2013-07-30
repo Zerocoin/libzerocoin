@@ -6,6 +6,12 @@ if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
     message(FATAL_ERROR "Prevented in-tree build. This is bad practice.")
 endif(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
 
+if(NOT CMAKE_BUILD_TYPE)
+   set(CMAKE_BUILD_TYPE "Release")
+   message(STATUS "Build type not specified: defaulting to release.")
+endif(NOT CMAKE_BUILD_TYPE)
+set(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "")
+
 #
 # Setup overall project
 #
@@ -32,9 +38,17 @@ set(BITCOIN_BIGNUM_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/bitcoin_bignum)
 #
 # Project-wide installation settings
 #
-set(ZEROCOIN_INCLUDE_DIR include)
+set(ZEROCOIN_INCLUDE_DIR include/zerocoin)
 set(ZEROCOIN_BIN_DIR     bin)
 set(ZEROCOIN_LIB_DIR     lib)
+
+#
+# pkg-config substitution variables
+#
+file(TO_NATIVE_PATH "${CMAKE_INSTALL_PREFIX}"             prefix)
+file(TO_NATIVE_PATH "\${prefix}"                          exec_prefix)
+file(TO_NATIVE_PATH "\${exec_prefix}/${ZEROCOIN_LIB_DIR}" libdir)
+file(TO_NATIVE_PATH "\${prefix}/${ZEROCOIN_INCLUDE_DIR}"  includedir)
 
 #
 # Add individual directories to project
@@ -57,21 +71,33 @@ add_custom_target(uninstall
 # Shared library generation libzerocoin.so
 ########################################################################
 
+#
+# Tell compiler where to search for include files
+#
 include_directories(
   ${BITCOIN_BIGNUM_INCLUDE_DIR}
   ${Boost_INCLUDE_DIRS}
   ${OPENSSL_INCLUDE_DIR}
 )
 
+#
+# Tell linker where to look for library files
+#
 link_directories(
   ${Boost_LIBRARY_DIRS}
 )
 
+#
+# List of libraries to link in
+#
 list(APPEND zerocoin_libs
   ${Boost_LIBRARIES}
   ${OPENSSL_CRYPTO_LIBRARY}
 )
 
+#
+# List of source files to compile
+#
 list(APPEND zerocoin_sources
   Accumulator.cpp
   AccumulatorProofOfKnowledge.cpp
@@ -84,8 +110,64 @@ list(APPEND zerocoin_sources
   SpendMetaData.cpp
 )
 
+#
+# Create shared library libzerocoin.so
+#
 add_library(zerocoin SHARED ${zerocoin_sources})
 target_link_libraries(zerocoin ${zerocoin_libs})
+
+#
+# Install shared library
+#
+install(TARGETS zerocoin
+  LIBRARY DESTINATION ${ZEROCOIN_LIB_DIR}
+)
+
+#
+# Install header files
+#
+install(FILES
+  bitcoin_bignum/allocators.h
+  bitcoin_bignum/bignum.h
+  bitcoin_bignum/clientversion.h
+  bitcoin_bignum/compat.h
+  bitcoin_bignum/hash.h
+  bitcoin_bignum/netbase.h
+  bitcoin_bignum/serialize.h
+  bitcoin_bignum/uint256.h
+  bitcoin_bignum/version.h
+  DESTINATION ${ZEROCOIN_INCLUDE_DIR}/bitcoin_bignum
+)
+
+install(FILES
+  Accumulator.h
+  AccumulatorProofOfKnowledge.h
+  Coin.h
+  CoinSpend.h
+  Commitment.h
+  ParamGeneration.h
+  Params.h
+  SerialNumberSignatureOfKnowledge.h
+  SpendMetaData.h
+  Zerocoin.h
+  DESTINATION ${ZEROCOIN_INCLUDE_DIR}
+)
+
+#
+# Create pkg-config file
+#
+configure_file(
+  ${CMAKE_CURRENT_SOURCE_DIR}/zerocoin.pc.in
+  ${CMAKE_CURRENT_BINARY_DIR}/zerocoin.pc
+@ONLY)
+
+#
+# Install pkg-config file
+#
+install(
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/zerocoin.pc
+  DESTINATION ${ZEROCOIN_LIB_DIR}/pkgconfig
+)
 
 ########################################################################
 # Executable files
