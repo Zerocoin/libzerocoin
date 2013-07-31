@@ -51,7 +51,7 @@ void Accumulator::accumulate(const PublicCoin& coin) {
 		throw ZerocoinException(msg);
 	}
 
-	if(coin.isValid()) {
+	if(coin.validate()) {
 		// Compute new accumulator = "old accumulator"^{element} mod N
 		this->value = this->value.pow_mod(coin.getValue(), this->params->accumulatorModulus);
 	} else {
