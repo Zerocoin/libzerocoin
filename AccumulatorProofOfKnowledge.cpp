@@ -100,7 +100,7 @@ AccumulatorProofOfKnowledge::AccumulatorProofOfKnowledge(const AccumulatorAndPro
 
 /** Verifies that a commitment c is accumulated in accumulator a
  */
-bool AccumulatorProofOfKnowledge:: Verify(const Accumulator& a, const Bignum& valueOfCommitmentToCoin) const {
+bool AccumulatorProofOfKnowledge::Verify(const Accumulator& a, const Bignum& valueOfCommitmentToCoin) const {
 	const Bignum sg = params->accumulatorPoKCommitmentGroup.g;
 	const Bignum sh = params->accumulatorPoKCommitmentGroup.h;
 

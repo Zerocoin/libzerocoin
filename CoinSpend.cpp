@@ -43,7 +43,10 @@ CoinSpend::CoinSpend(const Params* p, const PrivateCoin& coin,
 	this->accCommitmentToCoinValue = fullCommitmentToCoinUnderAccParams.getCommitmentValue();
 
 	// 2. Generate a ZK proof that the two commitments contain the same public coin.
-	this->commitmentPoK = CommitmentProofOfKnowledge(&p->serialNumberSoKCommitmentGroup, &p->accumulatorParams.accumulatorPoKCommitmentGroup, fullCommitmentToCoinUnderSerialParams, fullCommitmentToCoinUnderAccParams);
+	this->commitmentPoK = CommitmentProofOfKnowledge(&p->serialNumberSoKCommitmentGroup,
+	                                                 &p->accumulatorParams.accumulatorPoKCommitmentGroup,
+	                                                 fullCommitmentToCoinUnderSerialParams,
+	                                                 fullCommitmentToCoinUnderAccParams);
 
 	// Now generate the two core ZK proofs:
 	// 3. Proves that the committed public coin is in the Accumulator (PoK of "witness")
