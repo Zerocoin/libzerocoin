@@ -17,19 +17,17 @@ namespace libzerocoin {
 
 //PublicCoin class
 PublicCoin::PublicCoin(const Params* p):
-	params(p), valid(false), denomination(ZQ_LOVELACE) {
+	params(p), denomination(ZQ_LOVELACE) {
 	if (this->params->initialized == false) {
 		throw ZerocoinException("Params are not initialized");
 	}
 };
 
 PublicCoin::PublicCoin(const Params* p, const Bignum& coin, const CoinDenomination d):
-	params(p), valid(false), value(coin), denomination(d) {
+	params(p), value(coin), denomination(d) {
 	if (this->params->initialized == false) {
 		throw ZerocoinException("Params are not initialized");
 	}
-	
-	this->valid = this->validate();
 };
 
 bool PublicCoin::operator==(const PublicCoin& rhs) const {
@@ -48,8 +46,8 @@ const CoinDenomination PublicCoin::getDenomination() const {
 	return static_cast<CoinDenomination>(this->denomination);
 }
 
-bool PublicCoin::validate() const {
-	return (this->params->accumulatorParams.minCoinValue < value) && (value < this->params->accumulatorParams.maxCoinValue) && value.isPrime(params->zkp_iterations);
+bool PublicCoin::validate() const{
+    return (this->params->accumulatorParams.minCoinValue < value) && (value < this->params->accumulatorParams.maxCoinValue) && value.isPrime(params->zkp_iterations);
 }
 
 //PrivateCoin class

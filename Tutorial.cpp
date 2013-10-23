@@ -114,7 +114,7 @@ ZerocoinTutorial()
 		libzerocoin::PublicCoin pubCoinNew(params, serializedCoin);
 
 		// Now make sure the coin is valid.
-		if (!pubCoinNew.isValid()) {
+		if (!pubCoinNew.validate()) {
 			// If this returns false, don't accept the coin for any purpose!
 			// Any ZEROCOIN_MINT with an invalid coin should NOT be
 			// accepted as a valid transaction in the block chain.

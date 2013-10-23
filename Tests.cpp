@@ -347,19 +347,19 @@ bool Test_InvalidCoin()
 		}
 				
 		PublicCoin pubCoin(g_Params);
-		if (pubCoin.isValid()) {
+		if (pubCoin.validate()) {
 			// A blank coin should not be valid!
 			return false;
 		}		
 		
 		PublicCoin pubCoin2(g_Params, coinValue, ZQ_LOVELACE);
-		if (pubCoin2.isValid()) {
+		if (pubCoin2.validate()) {
 			// A non-prime coin should not be valid!
 			return false;
 		}
 		
 		PublicCoin pubCoin3 = pubCoin2;
-		if (pubCoin2.isValid()) {
+		if (pubCoin2.validate()) {
 			// A copy of a non-prime coin should not be valid!
 			return false;
 		}
@@ -368,7 +368,7 @@ bool Test_InvalidCoin()
 		CDataStream ss(SER_NETWORK, PROTOCOL_VERSION);
 		ss << pubCoin;
 		PublicCoin pubCoin4(g_Params, ss);
-		if (pubCoin4.isValid()) {
+		if (pubCoin4.validate()) {
 			// A deserialized copy of a non-prime coin should not be valid!
 			return false;
 		}
