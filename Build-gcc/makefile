@@ -44,44 +44,23 @@ all: libzerocoin test tutorial
 
 # Tool invocations
 libzerocoin: $(OBJS) $(USER_OBJS)
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross ${CXX} Linker'
 	${CXX} -fopenmp -L/opt/local/lib -shared -o "libzerocoin.so" $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '
 
 test: $(OBJS) $(USER_OBJS) 
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross ${CXX} Linker'
 	${CXX} -fopenmp -L/opt/local/lib -o "tests" ../Tests.cpp $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '  
 
 paramgen: $(OBJS) $(USER_OBJS)
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross ${CXX} Linker'
 	${CXX} -fopenmp -L/opt/local/lib -o "paramgen" ../paramgen.cpp $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '  
 
 benchmark: $(OBJS) $(USER_OBJS) 
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross ${CXX} Linker'
 	${CXX} -fopenmp -L/opt/local/lib -o "benchmark" ../Benchmark.cpp $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '  
 
 tutorial: $(OBJS) $(USER_OBJS) 
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross ${CXX} Linker'
 	${CXX} -fopenmp -L/opt/local/lib -o "tutorial" ../Tutorial.cpp $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '  
 
 # Other Targets
 clean:
 	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) libzerocoin.so tests benchmark paramgen
-	-@echo ' '
 
 .PHONY: all clean dependents
 .SECONDARY:
