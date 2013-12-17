@@ -40,15 +40,15 @@ endif
 
  -include ../makefile.defs
 
-.DEFAULT_GOAL := libzerocoin
+.DEFAULT_GOAL := libzerocoin.so
 
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: libzerocoin test tutorial
+all: libzerocoin.so test tutorial
 
 # Tool invocations
-libzerocoin: $(OBJS) $(USER_OBJS)
+libzerocoin.so: $(OBJS) $(USER_OBJS)
 	${CXX} ${LDFLAGS} -shared -o "libzerocoin.so" $(OBJS) $(USER_OBJS) $(LIBS)
 
 test: $(OBJS) $(USER_OBJS) 
