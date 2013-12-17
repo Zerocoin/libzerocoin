@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -I/opt/local/include -lboost_system-mt -lcrypto
+LIBS := -I/opt/local/include -lboost_system -lcrypto
 
