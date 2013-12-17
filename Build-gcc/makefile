@@ -13,7 +13,7 @@ RM := rm
 -include objects.mk
 
 DEBUG_FLAGS=	-g
-CXXFLAGS=	-fopenmp -I/opt/local/include -I/usr/local/include -Wall -fpic
+CXXFLAGS=	-std=c++11 -fopenmp -I/opt/local/include -I/usr/local/include -Wall -fpic
 LDFLAGS=	-L /opt/local/lib -L /usr/local/lib
 
 
