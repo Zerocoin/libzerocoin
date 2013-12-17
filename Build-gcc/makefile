@@ -12,6 +12,11 @@ RM := rm
 -include subdir.mk
 -include objects.mk
 
+DEBUG_FLAGS=	-g
+CXXFLAGS=	-fopenmp -I/opt/local/include -I/usr/local/include -Wall -fpic
+LDFLAGS=	-L /opt/local/lib -L /usr/local/lib
+
+
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(C++_DEPS)),)
 -include $(C++_DEPS)
@@ -44,19 +49,19 @@ all: libzerocoin test tutorial
 
 # Tool invocations
 libzerocoin: $(OBJS) $(USER_OBJS)
-	${CXX} -fopenmp -L/opt/local/lib -shared -o "libzerocoin.so" $(OBJS) $(USER_OBJS) $(LIBS)
+	${CXX} ${LDFLAGS} -shared -o "libzerocoin.so" $(OBJS) $(USER_OBJS) $(LIBS)
 
 test: $(OBJS) $(USER_OBJS) 
-	${CXX} -fopenmp -L/opt/local/lib -o "tests" ../Tests.cpp $(OBJS) $(USER_OBJS) $(LIBS)
+	${CXX} ${LDFLAGS} -o "tests" ../Tests.cpp $(OBJS) $(USER_OBJS) $(LIBS)
 
 paramgen: $(OBJS) $(USER_OBJS)
-	${CXX} -fopenmp -L/opt/local/lib -o "paramgen" ../paramgen.cpp $(OBJS) $(USER_OBJS) $(LIBS)
+	${CXX} ${LDFLAGS} -o "paramgen" ../paramgen.cpp $(OBJS) $(USER_OBJS) $(LIBS)
 
 benchmark: $(OBJS) $(USER_OBJS) 
-	${CXX} -fopenmp -L/opt/local/lib -o "benchmark" ../Benchmark.cpp $(OBJS) $(USER_OBJS) $(LIBS)
+	${CXX} ${LDFLAGS} -o "benchmark" ../Benchmark.cpp $(OBJS) $(USER_OBJS) $(LIBS)
 
 tutorial: $(OBJS) $(USER_OBJS) 
-	${CXX} -fopenmp -L/opt/local/lib -o "tutorial" ../Tutorial.cpp $(OBJS) $(USER_OBJS) $(LIBS)
+	${CXX} ${LDFLAGS} -o "tutorial" ../Tutorial.cpp $(OBJS) $(USER_OBJS) $(LIBS)
 
 # Other Targets
 clean:
