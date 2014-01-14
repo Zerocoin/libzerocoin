@@ -150,7 +150,7 @@ void PrivateCoin::mintCoinFast(const CoinDenomination denomination) {
 
 		// The commitment was not prime. Increment "r" and recalculate "C":
 		// r = r + r_delta mod q
-		// C = C * h mod p
+		// C = C * h^r_delta mod p
 		r = (r + r_delta) % this->params->coinCommitmentGroup.groupOrder;
 		commitmentValue = commitmentValue.mul_mod(this->params->coinCommitmentGroup.h.pow_mod(r_delta, this->params->coinCommitmentGroup.modulus), this->params->coinCommitmentGroup.modulus);
 	}
