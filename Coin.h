@@ -57,7 +57,7 @@ public:
 	 *  given the parameters
 	 * @return true if valid
 	 */
-	bool validate() const;
+    bool validate() const;
 	IMPLEMENT_SERIALIZE
 	(
 	    READWRITE(value);
@@ -85,7 +85,7 @@ private:
 class PrivateCoin {
 public:
 	template<typename Stream>
-	PrivateCoin(const Params* p, Stream& strm): params(p) {
+	PrivateCoin(const Params* p, Stream& strm): publicCoin(p),params(p) {
 		strm >> *this;
 	}
 	PrivateCoin(const Params* p,const CoinDenomination denomination = ZQ_LOVELACE);

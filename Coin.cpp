@@ -18,20 +18,20 @@ namespace libzerocoin {
 //PublicCoin class
 PublicCoin::PublicCoin(const Params* p):
 	params(p), denomination(ZQ_LOVELACE) {
-	if(this->params->initialized == false) {
-		throw std::invalid_argument("Params are not initialized");
+	if (this->params->initialized == false) {
+		throw ZerocoinException("Params are not initialized");
 	}
 };
 
 PublicCoin::PublicCoin(const Params* p, const Bignum& coin, const CoinDenomination d):
 	params(p), value(coin), denomination(d) {
-	if(this->params->initialized == false) {
-		throw std::invalid_argument("Params are not initialized");
+	if (this->params->initialized == false) {
+		throw ZerocoinException("Params are not initialized");
 	}
 };
 
 bool PublicCoin::operator==(const PublicCoin& rhs) const {
-	return this->value == rhs.value;// FIXME check param equality
+	return this->value == rhs.value; // FIXME check param equality
 }
 
 bool PublicCoin::operator!=(const PublicCoin& rhs) const {
@@ -46,15 +46,15 @@ const CoinDenomination PublicCoin::getDenomination() const {
 	return static_cast<CoinDenomination>(this->denomination);
 }
 
-bool PublicCoin::validate() const {
-	return (this->params->accumulatorParams.minCoinValue < value) && (value < this->params->accumulatorParams.maxCoinValue) && value.isPrime(params->zkp_iterations);
+bool PublicCoin::validate() const{
+    return (this->params->accumulatorParams.minCoinValue < value) && (value < this->params->accumulatorParams.maxCoinValue) && value.isPrime(params->zkp_iterations);
 }
 
 //PrivateCoin class
 PrivateCoin::PrivateCoin(const Params* p, const CoinDenomination denomination): params(p), publicCoin(p) {
 	// Verify that the parameters are valid
 	if(this->params->initialized == false) {
-		throw std::invalid_argument("Params are not initialized");
+		throw ZerocoinException("Params are not initialized");
 	}
 
 #ifdef ZEROCOIN_FAST_MINT
