@@ -86,7 +86,7 @@ CalculateParams(Params &params, Bignum N, string aux, uint32_t securityLevel)
 	        calculateSeed(N, aux, securityLevel, STRING_QRNCOMMIT_GROUPG),
 	        &resultCtr).pow_mod(Bignum(2), N);
 	params.accumulatorParams.accumulatorQRNCommitmentGroup.h = generateIntegerFromSeed(NLen - 1,
-	        calculateSeed(N, aux, securityLevel, STRING_QRNCOMMIT_GROUPG),
+	        calculateSeed(N, aux, securityLevel, STRING_QRNCOMMIT_GROUPH),
 	        &resultCtr).pow_mod(Bignum(2), N);
 
 	// Calculate the accumulator base, which we calculate as "u = C**2 mod N"
