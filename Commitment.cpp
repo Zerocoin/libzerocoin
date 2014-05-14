@@ -130,12 +130,7 @@ bool CommitmentProofOfKnowledge::Verify(const Bignum& A, const Bignum& B) const
 	Bignum computedChallenge = calculateChallenge(A, B, T1, T2);
 
 	// Return success if the computed challenge matches the incoming challenge
-	if(computedChallenge == this->challenge) {
-		return true;
-	}
-
-	// Otherwise return failure
-	return false;
+	return computedChallenge == this->challenge;
 }
 
 const Bignum CommitmentProofOfKnowledge::calculateChallenge(const Bignum& a, const Bignum& b, const Bignum &commitOne, const Bignum &commitTwo) const {

@@ -110,7 +110,7 @@ bool SerialNumberSignatureOfKnowledge::Verify(const Bignum& coinSerialNumber, co
 	Bignum g = params->serialNumberSoKCommitmentGroup.g;
 	Bignum h = params->serialNumberSoKCommitmentGroup.h;
 	CHashWriter hasher(0,0);
-	hasher << *params << valueOfCommitmentToCoin <<coinSerialNumber;
+	hasher << *params << valueOfCommitmentToCoin << coinSerialNumber;
 
 	vector<CBigNum> tprime(params->zkp_iterations);
 	unsigned char *hashbytes = (unsigned char*) &this->hash;
