@@ -1,4 +1,14 @@
+### WE WEREN'T JOKING. THERE WERE WARNINGS THAT THIS WAS BUGGY PROTOTYPE CODE AND YOU USED IT ANYWAY. SO WE'VE TAKEN AWAY THE MAKEFILE AND ABANDONED THIS PROJECT.
+
+THIS CODE IS UNMAINTAINED AND HAS KNOWN EXPLOITS. DO NOT USE IT. 
+
+
+THERE ARE DOWNSTREAM  COPIES THAT MIGHT HAVE BETTER SECURITY.  THEN AGAIN, SOME OF THEM  COPIED THE BELOW WARNING VERBATIM AND USED THE CODE UNCHANGED ANYWAY, SO CAVEAT EMPTOR.
+
+The successor project that has undergone substaintial cryptographic review is Zcash. More can be found at  https://github.com/zcash. We strongly suggest you use that instead. Its open source too.
+
 # Introduction
+
 
 libzerocoin is a C++ library that implements the core cryptographic routines of the Zerocoin protocol. Zerocoin is a distributed anonymous cash extension for Bitcoin-type (hash chain based) protocols. The protocol uses zero knowledge proofs to implement a fully decentralized coin laundry.
 
