@@ -35,7 +35,7 @@ SerialNumberSignatureOfKnowledge::SerialNumberSignatureOfKnowledge(const
 	Bignum h = params->serialNumberSoKCommitmentGroup.h;
 
 	CHashWriter hasher(0,0);
-	hasher << *params << commitmentToCoin.getCommitmentValue() << coin.getSerialNumber();
+	hasher << *params << commitmentToCoin.getCommitmentValue() << coin.getSerialNumber() << msghash;
 
 	vector<Bignum> r(params->zkp_iterations);
 	vector<Bignum> v(params->zkp_iterations);
@@ -110,7 +110,7 @@ bool SerialNumberSignatureOfKnowledge::Verify(const Bignum& coinSerialNumber, co
 	Bignum g = params->serialNumberSoKCommitmentGroup.g;
 	Bignum h = params->serialNumberSoKCommitmentGroup.h;
 	CHashWriter hasher(0,0);
-	hasher << *params << valueOfCommitmentToCoin <<coinSerialNumber;
+	hasher << *params << valueOfCommitmentToCoin << coinSerialNumber << msghash;
 
 	vector<CBigNum> tprime(params->zkp_iterations);
 	unsigned char *hashbytes = (unsigned char*) &this->hash;
