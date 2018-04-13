@@ -1,16 +1,17 @@
-### WE WEREN'T JOKING. THERE WERE WARNINGS THAT THIS WAS BUGGY PROTOTYPE CODE AND YOU USED IT ANYWAY. SO WE'VE TAKEN AWAY THE MAKEFILE.  THE CODE IS ABANDOND (AND HAS BEEN SINCE 2014)
+### WE WEREN'T JOKING. THERE WERE WARNINGS THAT THIS WAS BUGGY PROTOTYPE CODE AND YOU USED IT ANYWAY. SO WE'VE TAKEN AWAY THE MAKEFILE.  THIS CODE IS ABONDONED (AND HAS BEEN SINCE 2014) 
+
 
 THIS CODE IS UNMAINTAINED AND HAS KNOWN EXPLOITS. DO NOT USE IT. 
 
 
-THERE ARE DOWNSTREAM COPIES THAT MIGHT HAVE BETTER SECURITY.  THEN AGAIN, SOME PROJECTS  COPIED THE BELOW WARNING VERBATIM AND USED THE CODE UNCHANGED ANYWAY, SO CAVEAT EMPTOR.
+THERE ARE DOWNSTREAM COPIES THAT MIGHT HAVE BETTER SECURITY.  THEN AGAIN, SOME PROJECTS  COPIED  THE CODE VERBATIM COMPLETE WITH THE THE BELOW WARNING, SO CAVEAT EMPTOR.
 
-The successor project that has undergone substaintial cryptographic and code review is Zerocash/Zcash. More can be found at  https://github.com/zcash. We strongly suggest you use that instead. It is also open source.
+The successor protocol that has undergone substaintial cryptographic and code review is Zerocash/Zcash. More can be found at  https://github.com/zcash. We strongly suggest you use that instead. It is also open source.
 
 # Introduction
 
 
-libzerocoin is a C++ library that implements the core cryptographic routines of the Zerocoin protocol. Zerocoin is a distributed anonymous cash extension for Bitcoin-type (hash chain based) protocols. The protocol uses zero knowledge proofs to implement a fully decentralized coin laundry.
+libzerocoin WAS a C++ library that implemented the core cryptographic routines of the Zerocoin protocol. Zerocoin is a distributed anonymous cash extension for Bitcoin-type (hash chain based) protocols. The protocol uses zero knowledge proofs to implement a fully decentralized coin laundry.
 
 The Zerocoin protocol is provably secure and uses well-studied cryptographic primitives. For a complete description of the protocol, see our white paper published in the IEEE Security & Privacy Symposium (2013) below.
 
