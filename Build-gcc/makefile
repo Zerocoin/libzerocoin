@@ -12,6 +12,11 @@ RM := rm
 -include subdir.mk
 -include objects.mk
 
+DEBUG_FLAGS=	-g
+CXXFLAGS=	-std=c++11 -fopenmp -I/opt/local/include -I/usr/local/include -Wall -fpic
+LDFLAGS=	-L /opt/local/lib -L /usr/local/lib
+
+
 ifneq ($(MAKECMDGOALS),clean)
 ifneq ($(strip $(C++_DEPS)),)
 -include $(C++_DEPS)
@@ -35,53 +40,32 @@ endif
 
  -include ../makefile.defs
 
-.DEFAULT_GOAL := libzerocoin
+.DEFAULT_GOAL := libzerocoin.so
 
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: libzerocoin test tutorial
+all: libzerocoin.so test tutorial
 
 # Tool invocations
-libzerocoin: $(OBJS) $(USER_OBJS)
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross G++ Linker'
-	g++ -fopenmp -L/opt/local/lib -shared -o "libzerocoin.so" $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '
+libzerocoin.so: $(OBJS) $(USER_OBJS)
+	${CXX} ${LDFLAGS} -shared -o "libzerocoin.so" $(OBJS) $(USER_OBJS) $(LIBS)
 
 test: $(OBJS) $(USER_OBJS) 
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross G++ Linker'
-	g++ -fopenmp -L/opt/local/lib -o "tests" ../Tests.cpp $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '  
+	${CXX} ${LDFLAGS} -o "tests" ../Tests.cpp $(OBJS) $(USER_OBJS) $(LIBS)
 
 paramgen: $(OBJS) $(USER_OBJS)
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross G++ Linker'
-	g++ -fopenmp -L/opt/local/lib -o "paramgen" ../paramgen.cpp $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '  
+	${CXX} ${LDFLAGS} -o "paramgen" ../paramgen.cpp $(OBJS) $(USER_OBJS) $(LIBS)
 
 benchmark: $(OBJS) $(USER_OBJS) 
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross G++ Linker'
-	g++ -fopenmp -L/opt/local/lib -o "benchmark" ../Benchmark.cpp $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '  
+	${CXX} ${LDFLAGS} -o "benchmark" ../Benchmark.cpp $(OBJS) $(USER_OBJS) $(LIBS)
 
 tutorial: $(OBJS) $(USER_OBJS) 
-	@echo 'Building target: $@'
-	@echo 'Invoking: Cross G++ Linker'
-	g++ -fopenmp -L/opt/local/lib -o "tutorial" ../Tutorial.cpp $(OBJS) $(USER_OBJS) $(LIBS)
-	@echo 'Finished building target: $@'
-	@echo ' '  
+	${CXX} ${LDFLAGS} -o "tutorial" ../Tutorial.cpp $(OBJS) $(USER_OBJS) $(LIBS)
 
 # Other Targets
 clean:
-	-$(RM) $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) libzerocoin.so tests benchmark paramgen
-	-@echo ' '
+	-$(RM) -f $(C++_DEPS)$(OBJS)$(C_DEPS)$(CC_DEPS)$(LIBRARIES)$(CPP_DEPS)$(CXX_DEPS)$(C_UPPER_DEPS) libzerocoin.so tests benchmark paramgen
 
 .PHONY: all clean dependents
 .SECONDARY:
